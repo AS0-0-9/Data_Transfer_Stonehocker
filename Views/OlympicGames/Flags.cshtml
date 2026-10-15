@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OlympicGame>
+
+<div class="row">
+    <div class="col-md-3">
+        <h5>Filter by game</h5>
+        <ul class="list-unstyled">
+            <li><a asp-action="Index">ALL</a></li>
+            @foreach (var item in Html.GetEnumSelectList<OlympicType>())
+            {
+                <li><a asp-action="Game" asp-route-id="@item.Value">@item.Text</a></li>
+            }
+        </ul>
+
+        <h5>Filter by category</h5>
+        <ul class="list-unstyled">
+            <li><a asp-action="Index">ALL</a></li>
+            @foreach (var item in Html.GetEnumSelectList<IndoorOutdoor>())
+            {
+                <li><a asp-action="Category" asp-route-id="@item.Value">@item.Text</a></li>
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        <h3>@ViewBag.Heading</h3>
+        <div class="d-flex flex-wrap gap-3">
+            @foreach (var g in Model)
+            {
+                <img src="~/images/flags/@(g.Code).png"
+                     alt="@g.Country"
+                     title="@g.Country - @g.TypeOfGame.DisplayName() - @g.IndoorOrOutdoor"
+                     width="100" />
+            }
+        </div>
+    </div>
+</div>
