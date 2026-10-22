@@ -8,6 +8,9 @@ namespace Data_Transfer_Stonehocker
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+
 
             var app = builder.Build();
 
@@ -23,7 +26,7 @@ namespace Data_Transfer_Stonehocker
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<OlympicGame>
+
+
+<h2>Favorites</h2>
+
+@if (!Model.Any())
+{
+    <p>You don't have any favorited countries.</p>
+}
+else
+{
+    <div class="d-flex flex-wrap gap-3">
+        @foreach (var g in Model)
+        {
+            <img src="~/images/flags/@(g.Code).png"
+                 alt="@g.Country"
+                 title="@g.Country"
+                 width="100" />
+        }
+    </div>
+}
+
+<a asp-controller="OlympicGames" asp-action="Index">Back to Flags</a>
+
+<form asp-controller="Favorites" asp-action="ClearFavorites" method="post" class="d-inline">
+    <button type="submit">Clear Favorites</button>
+</form>

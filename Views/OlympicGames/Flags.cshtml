@@ -30,6 +30,10 @@
                      alt="@g.Country"
                      title="@g.Country - @g.TypeOfGame.DisplayName() - @g.IndoorOrOutdoor"
                      width="100" />
+                <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post">
+                    <input type="hidden" name="code" value="@g.Code" />
+                    <button type="submit">Favorite</button>
+                </form>
             }
         </div>
     </div>

@@ -7,7 +7,7 @@ namespace Data_Transfer_Stonehocker.Controllers
     public class OlympicGamesController : Controller
     {
 
-        private static readonly List<OlympicGame> _games = new()
+        public static readonly List<OlympicGame> _games = new()
         {
             new() { Id = 1,  Country = "Canada",        Code = "ca", TypeOfGame = OlympicType.Winter,       Sport = SportType.Curling,       IndoorOrOutdoor = IndoorOutdoor.Indoor },
             new() { Id = 2,  Country = "Sweden",        Code = "se", TypeOfGame = OlympicType.Winter,       Sport = SportType.Curling,       IndoorOrOutdoor = IndoorOutdoor.Indoor },
