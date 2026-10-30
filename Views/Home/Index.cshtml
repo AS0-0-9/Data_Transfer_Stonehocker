@@ -1,5 +1,68 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Data_Transfer_Stonehocker.Models
+@using Data_Transfer_Stonehocker.Models.Enums
+@model OlympicViewModel
+
+@{
+    var f = Model.Filters;
 }
 
+<div class="row">
+    <div class="col-md-3">
+        <h5>Filter by game</h5>
+        <ul class="list-unstyled">
+            <li>
+                <a asp-controller="Home" asp-action="Index"
+                   asp-route-filter="@f.With(category: "all")">ALL</a>
+            </li>
+            @foreach (var name in Enum.GetNames(typeof(OlympicType)))
+            {
+                <li>
+                    <a asp-controller="Home" asp-action="Index"
+                       asp-route-filter="@f.With(category: name.ToLower())">@name</a>
+                </li>
+            }
+        </ul>
 
+        <h5>Filter by category</h5>
+        <ul class="list-unstyled">
+            <li>
+                <a asp-controller="Home" asp-action="Index"
+                   asp-route-filter="@f.With(type: "all")">ALL</a>
+            </li>
+            @foreach (var name in Enum.GetNames(typeof(IndoorOutdoor)))
+            {
+                <li>
+                    <a asp-controller="Home" asp-action="Index"
+                       asp-route-filter="@f.With(type: name.ToLower())">@name</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        <h3>Olympic Games</h3>
+
+        @if (!Model.Games.Any())
+        {
+            <p>No countries match these filters.</p>
+        }
+        else
+        {
+            <div class="d-flex flex-wrap gap-3">
+                @foreach (var g in Model.Games)
+                {
+                    <div class="text-center">
+                        <img src="~/images/flags/@(g.Code).png"
+                             alt="@g.Country"
+                             title="@g.Country - @g.TypeOfGame.DisplayName() - @g.IndoorOrOutdoor"
+                             width="100" />
+                        <form asp-controller="Favorites" asp-action="ToggleFavorite" method="post">
+                            <input type="hidden" name="code" value="@g.Code" />
+                            <button type="submit" class="btn btn-sm btn-outline-warning">Favorite</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

@@ -6,12 +6,31 @@ namespace Data_Transfer_Stonehocker.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly GameService _service;
+
+        public HomeController(GameService service)
         {
-            return View();
+            _service = service;
         }
 
-        
+        public IActionResult Index(OlympicViewModel model)
+        {
+            var filters = model.Filters;
+            var games = _service.GetAll().AsEnumerable();
+
+
+            if (filters.HasCategory)
+                games = games.Where(g => g.TypeOfGame.ToString().ToLower() == filters.Category.ToLower());
+                
+
+            if (filters.HasType)
+                games = games.Where(g => g.IndoorOrOutdoor.ToString().ToLower() == filters.Type.ToLower());
+
+            model.Games = games.ToList();
+            return View(model);
+        }
+
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

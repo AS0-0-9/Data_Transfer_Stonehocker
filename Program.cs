@@ -1,3 +1,5 @@
+using Data_Transfer_Stonehocker.Models;
+
 namespace Data_Transfer_Stonehocker
 {
     public class Program
@@ -11,6 +13,7 @@ namespace Data_Transfer_Stonehocker
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
 
+            builder.Services.AddSingleton<GameService>();
 
             var app = builder.Build();
 
@@ -28,6 +31,8 @@ namespace Data_Transfer_Stonehocker
             app.UseAuthorization();
             app.UseSession();
             app.MapStaticAssets();
+
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=OlympicGames}/{action=Index}/{id?}");
